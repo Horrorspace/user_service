@@ -27,6 +27,9 @@ export class User {
     @Prop()
     confirmed: boolean;
 
+    @Prop(Date)
+    registrationDate: Date;
+
     @Prop({ type: [ObjectId], ref: RefreshToken.name })
     refreshTokens: RefreshToken[];
 
