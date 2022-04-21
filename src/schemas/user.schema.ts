@@ -19,10 +19,10 @@ export class User {
     password: string;
 
     @Prop()
-    phone: string;
+    phone: string | null;
 
     @Prop()
-    confirmationCode: string;
+    confirmationCode: string | null;
 
     @Prop()
     confirmed: boolean;
