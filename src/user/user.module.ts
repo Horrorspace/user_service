@@ -1,16 +1,14 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule, ModelDefinition } from '@nestjs/mongoose';
-import { UserSchema, User, userName } from './schemas/user.schema';
+import { UserSchema, userName } from './schemas/user.schema';
 import {
     SettingsSchema,
-    Settings,
     settingsName,
 } from './schemas/settings.schema';
 import {
     RefreshTokenSchema,
-    RefreshToken,
     refreshTokenName,
-} from './schemas/refresh-token.schema';
+} from '../refresh-token/schemas/refresh-token.schema';
 
 const mongoOptions: ModelDefinition[] = [
     {
