@@ -1,18 +1,18 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { UserDocument, User } from '../schemas/user.schema';
-import { CreateUserDto } from 'src/dto/create-user.dto';
+import { UserDocument, User, userName } from '../schemas/user.schema';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
 
 @Injectable()
 export class UserModel {
     constructor(
-        @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+        @InjectModel(userName) private readonly userModel: Model<UserDocument>,
     ) {}
 
     async create(userDto: CreateUserDto): Promise<UserDocument> {
-        const createdUser = new this.userModel(userDto);
-        return await createdUser.save();
+        return await this.userModel.create(userDto);
     }
 
     async readAll(): Promise<User[]> {
@@ -27,7 +27,31 @@ export class UserModel {
         return await this.userModel.findOne({ email }).exec();
     }
 
-    async deleteByLogin(login: string): Promise<void> {
-        await this.userModel.deleteOne({ login }).exec();
+    async updateByLogin(login: string, data: UpdateUserDto): Promise<boolean> {
+        const result = await this.userModel
+            .updateOne({ login }, { $set: data })
+            .exec();
+        if (result.modifiedCount === 1) return true;
+        else return false;
+    }
+
+    async updateByEmail(email: string, data: UpdateUserDto): Promise<boolean> {
+        const result = await this.userModel
+            .updateOne({ email }, { $set: data })
+            .exec();
+        if (result.modifiedCount === 1) return true;
+        else return false;
+    }
+
+    async deleteByLogin(login: string): Promise<boolean> {
+        const result = await this.userModel.deleteOne({ login }).exec();
+        if (result.deletedCount === 1) return true;
+        else return false;
+    }
+
+    async deleteByEmail(email: string): Promise<boolean> {
+        const result = await this.userModel.deleteOne({ email }).exec();
+        if (result.deletedCount === 1) return true;
+        else return false;
     }
 }
