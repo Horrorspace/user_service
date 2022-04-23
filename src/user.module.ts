@@ -35,4 +35,4 @@ const mongoOptions: ModelDefinition[] = [
     controllers: [],
     providers: [],
 })
-export class AppModule {}
+export class UserModule {}
