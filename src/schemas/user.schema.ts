@@ -35,7 +35,7 @@ export class User {
     refreshTokens: RefreshToken[];
 
     @Prop({ type: ObjectId, ref: Settings.name })
-    settings: Settings;
+    settings: Settings | null;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
