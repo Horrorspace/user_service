@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserModel } from './user.model';
-import { Model, FilterQuery, UpdateQuery } from 'mongoose';
+import { Model, FilterQuery, UpdateQuery, Schema } from 'mongoose';
 import { DeleteResult, UpdateResult } from 'mongodb';
 import { Injectable } from '@nestjs/common';
 import { getModelToken, InjectModel } from '@nestjs/mongoose';
@@ -10,12 +10,15 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import getCurrentDate from '../../utils/getCurrentDate';
 import { UpdateUserDto } from '../dto/update-user.dto';
 
+const { ObjectId } = Schema.Types;
+
 describe('UserModel', () => {
     let userRepository: UserModel;
     let userModel: Model<User>;
 
     const registrationDate = getCurrentDate();
     const mockUser: User = {
+        _id: new ObjectId('1'),
         login: 'tester',
         email: 'tester@test.com',
         password: '111111111',
@@ -27,6 +30,7 @@ describe('UserModel', () => {
         // settings: null,
     };
     const mockUser_1: User = {
+        _id: new ObjectId('2'),
         login: 'tester1',
         email: 'tester1@test.com',
         password: '111111111',
@@ -99,6 +103,7 @@ describe('UserModel', () => {
             const userDto = doc as CreateUserDto;
             const result: User = {
                 ...userDto,
+                _id: new ObjectId('1'),
                 phone: null,
                 registrationDate,
                 confirmationCode: null,
