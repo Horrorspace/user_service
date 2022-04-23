@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongoShema } from 'mongoose';
-import { RefreshToken } from './refresh-token.schema';
-import { Settings } from './settings.schema';
-import getCurrentDate from '../utils/getCurrentDate';
+import { RefreshToken, refreshTokenName } from './refresh-token.schema';
+import { Settings, settingsName } from './settings.schema';
+import getCurrentDate from '../../utils/getCurrentDate';
 
 export type UserDocument = User & Document;
 
@@ -10,19 +10,19 @@ const { ObjectId } = MongoShema.Types;
 
 @Schema()
 export class User {
-    @Prop({ required: true })
+    @Prop({ required: true, unique: true })
     login: string;
 
-    @Prop({ required: true })
+    @Prop({ required: true, unique: true })
     email: string;
 
     @Prop({ required: true })
     password: string;
 
-    @Prop({ default: null })
+    @Prop({ type: String, default: null })
     phone: string | null;
 
-    @Prop({ default: null })
+    @Prop({ type: String, default: null })
     confirmationCode: string | null;
 
     @Prop({ default: false })
@@ -31,11 +31,13 @@ export class User {
     @Prop({ type: Date, default: getCurrentDate() })
     registrationDate: Date;
 
-    @Prop({ type: [ObjectId], ref: RefreshToken.name })
-    refreshTokens: RefreshToken[];
+    // @Prop({ type: [ObjectId], ref: refreshTokenName })
+    // refreshTokens: RefreshToken[];
 
-    @Prop({ type: ObjectId, ref: Settings.name })
-    settings: Settings | null;
+    // @Prop({ type: ObjectId, ref: settingsName })
+    // settings: Settings | null;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+export const userName = 'User';

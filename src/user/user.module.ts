@@ -1,37 +1,34 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { MongooseModule, ModelDefinition } from '@nestjs/mongoose';
-import { UserSchema, User } from './schemas/user.schema';
-import { SettingsSchema, Settings } from './schemas/settings.schema';
+import { UserSchema, User, userName } from './schemas/user.schema';
+import {
+    SettingsSchema,
+    Settings,
+    settingsName,
+} from './schemas/settings.schema';
 import {
     RefreshTokenSchema,
     RefreshToken,
+    refreshTokenName,
 } from './schemas/refresh-token.schema';
 
-const mongoUri: string = process.env.MONGODB_URI!;
 const mongoOptions: ModelDefinition[] = [
     {
-        name: User.name,
+        name: userName,
         schema: UserSchema,
     },
     {
-        name: RefreshToken.name,
+        name: refreshTokenName,
         schema: RefreshTokenSchema,
     },
     {
-        name: Settings.name,
+        name: settingsName,
         schema: SettingsSchema,
     },
 ];
 
 @Module({
-    imports: [
-        ConfigModule.forRoot({
-            envFilePath: '.env',
-        }),
-        MongooseModule.forRoot(mongoUri),
-        MongooseModule.forFeature(mongoOptions),
-    ],
+    imports: [MongooseModule.forFeature(mongoOptions)],
     controllers: [],
     providers: [],
 })

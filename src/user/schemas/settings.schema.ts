@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongoShema } from 'mongoose';
-import { User } from './user.schema';
+import { User, userName } from './user.schema';
 
 export type SettingsDocument = Settings & Document;
 
@@ -8,7 +8,7 @@ const { ObjectId } = MongoShema.Types;
 
 @Schema()
 export class Settings {
-    @Prop({ type: ObjectId, ref: User.name })
+    @Prop({ type: ObjectId, ref: userName })
     userId: User;
 
     @Prop()
@@ -22,3 +22,5 @@ export class Settings {
 }
 
 export const SettingsSchema = SchemaFactory.createForClass(Settings);
+
+export const settingsName = 'Settings';
