@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserDocument, User, userName } from '../schemas/user.schema';
@@ -17,6 +17,11 @@ export class UserModel {
 
     async readAll(): Promise<User[]> {
         return await this.userModel.find().exec();
+    }
+
+    async readIdByLogin(login: string): Promise<ObjectId | null> {
+        const user = await this.userModel.findOne({ login }).exec();
+        return user?._id;
     }
 
     async readByLogin(login: string): Promise<User | null> {

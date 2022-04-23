@@ -5,6 +5,7 @@ import { DeleteResult, UpdateResult } from 'mongodb';
 import { Injectable } from '@nestjs/common';
 import { getModelToken, InjectModel } from '@nestjs/mongoose';
 import { UserDocument, User, userName } from '../schemas/user.schema';
+import { settingsName } from '../schemas/settings.schema';
 import { CreateUserDto } from '../dto/create-user.dto';
 import getCurrentDate from '../../utils/getCurrentDate';
 import { UpdateUserDto } from '../dto/update-user.dto';
@@ -69,6 +70,19 @@ describe('UserModel', () => {
                         exec: jest.fn(),
                     },
                 },
+                {
+                    provide: getModelToken(settingsName),
+                    useValue: {
+                        new: jest.fn().mockResolvedValue(null),
+                        constructor: jest.fn().mockResolvedValue(null),
+                        find: jest.fn(),
+                        findOne: jest.fn(),
+                        updateOne: jest.fn(),
+                        deleteOne: jest.fn(),
+                        create: jest.fn(),
+                        exec: jest.fn(),
+                    },
+                }
             ],
         }).compile();
 
@@ -81,19 +95,18 @@ describe('UserModel', () => {
     });
 
     it('should create new user', async () => {
-        jest.spyOn(userModel, 'create').mockImplementation(
-            (doc: unknown) => {
-                const userDto = doc as CreateUserDto;
-                const result: User = {
-                    ...userDto,
-                    phone: null,
-                    registrationDate,
-                    confirmationCode: null,
-                    confirmed: false
-                }
-                return result as any;
-            },
-        );
+        jest.spyOn(userModel, 'create').mockImplementation((doc: unknown) => {
+            const userDto = doc as CreateUserDto;
+            const result: User = {
+                ...userDto,
+                phone: null,
+                registrationDate,
+                confirmationCode: null,
+                confirmed: false,
+                // settings: null,
+            };
+            return result as any;
+        });
         const createdUser = await userRepository.create(createUser);
         expect(createdUser).toEqual(mockUser);
     });
