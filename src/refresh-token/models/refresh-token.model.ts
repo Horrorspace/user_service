@@ -2,7 +2,6 @@ import { Model, ObjectId } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { RefreshTokenDocument, RefreshToken, refreshTokenName } from '../schemas/refresh-token.schema';
-import { userName } from '../../user/schemas/user.schema';
 
 @Injectable()
 export class RefreshTokenModel {
@@ -20,6 +19,10 @@ export class RefreshTokenModel {
 
     async readByUserId(userId: ObjectId): Promise<RefreshToken | null> {
         return await this.refreshTokenModel.findOne({ userId }).exec();
+    }
+
+    async readById(_id: ObjectId): Promise<RefreshToken | null> {
+        return await this.refreshTokenModel.findOne({ _id }).exec();
     }
 
     async updateByUserId(userId: ObjectId, data: UpdateUserDto): Promise<boolean> {
