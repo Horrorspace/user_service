@@ -27,5 +27,7 @@ export class UserModel {
         return await this.userModel.findOne({ email }).exec();
     }
 
-    async deleteByLogin(login: string): Promise<void> {}
+    async deleteByLogin(login: string): Promise<void> {
+        await this.userModel.deleteOne({ login }).exec();
+    }
 }
