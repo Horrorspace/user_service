@@ -11,7 +11,7 @@ export class UserModel {
         @InjectModel(userName) private readonly userModel: Model<UserDocument>,
     ) {}
 
-    async create(userDto: CreateUserDto): Promise<UserDocument> {
+    async create(userDto: CreateUserDto): Promise<User> {
         return await this.userModel.create(userDto);
     }
 
