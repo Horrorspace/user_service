@@ -12,19 +12,19 @@ export class UserModel {
 
     async create(userDto: CreateUserDto): Promise<UserDocument> {
         const createdUser = new this.userModel(userDto);
-        return createdUser.save();
+        return await createdUser.save();
     }
 
     async readAll(): Promise<User[]> {
-        return this.userModel.find().exec();
+        return await this.userModel.find().exec();
     }
 
     async readByLogin(login: string): Promise<User | null> {
-        return this.userModel.findOne({ login }).exec();
+        return await this.userModel.findOne({ login }).exec();
     }
 
     async readByEmail(email: string): Promise<User | null> {
-        return this.userModel.findOne({ email }).exec();
+        return await this.userModel.findOne({ email }).exec();
     }
 
     async deleteByLogin(login: string): Promise<void> {}
