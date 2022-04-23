@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UserModule } from './user/user.module';
 
 const mongoUri: string = process.env.MONGODB_URI!;
 
@@ -10,6 +11,7 @@ const mongoUri: string = process.env.MONGODB_URI!;
             envFilePath: '.env',
         }),
         MongooseModule.forRoot(mongoUri),
+        UserModule,
     ],
     controllers: [],
     providers: [],
