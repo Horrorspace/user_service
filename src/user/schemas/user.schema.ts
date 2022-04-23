@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongoShema } from 'mongoose';
+import { Document, Schema as MongoShema, ObjectId as objectId } from 'mongoose';
 import { RefreshToken, refreshTokenName } from '../../refresh-token/schemas/refresh-token.schema';
 import { Settings, settingsName } from './settings.schema';
 import getCurrentDate from '../../utils/getCurrentDate';
+import { type } from 'os';
 
 export type UserDocument = User & Document;
 
@@ -10,6 +11,8 @@ const { ObjectId } = MongoShema.Types;
 
 @Schema()
 export class User {
+    _id: objectId;
+
     @Prop({ required: true, unique: true })
     login: string;
 

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongoShema } from 'mongoose';
+import { Document, Schema as MongoShema, ObjectId as objectId } from 'mongoose';
 import { User, userName } from '../../user/schemas/user.schema';
 
 export type RefreshTokenDocument = RefreshToken & Document;
@@ -8,6 +8,8 @@ const { ObjectId } = MongoShema.Types;
 
 @Schema()
 export class RefreshToken {
+    _id: objectId;
+
     @Prop({ type: ObjectId, ref: userName })
     userId: User;
 
