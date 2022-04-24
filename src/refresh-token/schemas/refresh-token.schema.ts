@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongoShema, ObjectId as objectId } from 'mongoose';
 import { User, userName } from '../../user/schemas/user.schema';
+import getCurrentDate from '../../utils/getCurrentDate';
 
 export type RefreshTokenDocument = RefreshToken & Document;
 
@@ -11,24 +12,24 @@ export class RefreshToken {
     _id: objectId;
 
     @Prop({ type: ObjectId, ref: userName })
-    userId: User;
+    userId: objectId;
 
-    @Prop()
+    @Prop({ required: true, unique: true })
     token: string;
 
     @Prop()
     fingerprint: string;
 
-    @Prop()
+    @Prop({ required: true })
     userAgeng: string;
 
-    @Prop()
+    @Prop({ required: true })
     ip: string;
 
-    @Prop(Date)
+    @Prop({ type: Date, default: getCurrentDate() })
     createdAt: Date;
 
-    @Prop()
+    @Prop({ required: true })
     expiresIn: number;
 }
 
