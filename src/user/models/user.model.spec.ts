@@ -86,7 +86,7 @@ describe('UserModel', () => {
                         create: jest.fn(),
                         exec: jest.fn(),
                     },
-                }
+                },
             ],
         }).compile();
 
