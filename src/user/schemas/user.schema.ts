@@ -1,13 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongoShema, ObjectId as objectId } from 'mongoose';
-import { RefreshToken, refreshTokenName } from '../../refresh-token/schemas/refresh-token.schema';
-import { Settings, settingsName } from './settings.schema';
+// import { Settings, settingsName } from './settings.schema';
 import getCurrentDate from '../../utils/getCurrentDate';
-import { type } from 'os';
 
 export type UserDocument = User & Document;
-
-const { ObjectId } = MongoShema.Types;
 
 @Schema()
 export class User {
@@ -33,9 +29,6 @@ export class User {
 
     @Prop({ type: Date, default: getCurrentDate() })
     registrationDate: Date;
-
-    // @Prop({ type: [ObjectId], ref: refreshTokenName })
-    // refreshTokens: RefreshToken[];
 
     // @Prop({ type: ObjectId, ref: settingsName })
     // settings: Settings | null;
