@@ -17,11 +17,11 @@ export class RefreshToken {
     @Prop({ required: true, unique: true })
     token: string;
 
-    @Prop()
-    fingerprint: string;
+    @Prop({type: String, default: null})
+    fingerprint: string | null;
 
     @Prop({ required: true })
-    userAgeng: string;
+    userAgent: string;
 
     @Prop({ required: true })
     ip: string;
