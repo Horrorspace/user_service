@@ -1,9 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserModel } from './user.model';
 import { Model, FilterQuery, UpdateQuery, Schema } from 'mongoose';
-import { DeleteResult, UpdateResult } from 'mongodb';
-import { Injectable } from '@nestjs/common';
-import { getModelToken, InjectModel } from '@nestjs/mongoose';
+import { getModelToken } from '@nestjs/mongoose';
 import { UserDocument, User, userName } from '../schemas/user.schema';
 import { settingsName } from '../schemas/settings.schema';
 import { CreateUserDto } from '../dto/create-user.dto';
@@ -90,8 +88,8 @@ describe('UserModel', () => {
             ],
         }).compile();
 
-        userRepository = module.get(UserModel);
         userModel = module.get(getModelToken(userName));
+        userRepository = module.get(UserModel);
     });
 
     it('should be defined', () => {
