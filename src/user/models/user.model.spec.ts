@@ -110,7 +110,7 @@ describe('UserModel', () => {
             };
             return result as any;
         });
-        const createdUser = await userRepository.create(createUser);
+        const createdUser = await userRepository.createByEmail(createUser);
         expect(createdUser).toEqual(mockUser);
     });
 
