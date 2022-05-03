@@ -2,7 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model, FilterQuery, UpdateQuery, Schema } from 'mongoose';
 import { RefreshTokenModel } from './refresh-token.model';
-import { RefreshToken, RefreshTokenDocument, refreshTokenName } from '../schemas/refresh-token.schema';
+import {
+    RefreshToken,
+    RefreshTokenDocument,
+    refreshTokenName,
+} from '../schemas/refresh-token.schema';
 import { UserDocument, User, userName } from '../../user/schemas/user.schema';
 import { CreateRefreshTokenDto } from '../dto/create-refresh-token.dto';
 import getCurrentDate from '../../utils/getCurrentDate';
@@ -20,7 +24,8 @@ describe('RefreshTokenModel', () => {
         userId: new ObjectId('21'),
         token: 'KIAJFklwqgaF',
         fingerprint: null,
-        userAgent: 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.3',
+        userAgent:
+            'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.3',
         ip: '127.0.0.1',
         createdAt,
         expiresIn: 1000,
@@ -30,7 +35,8 @@ describe('RefreshTokenModel', () => {
         userId: new ObjectId('21'),
         token: 'KLGJewlkgwe',
         fingerprint: null,
-        userAgent: 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.4',
+        userAgent:
+            'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.4',
         ip: '192.168.0.2',
         createdAt,
         expiresIn: 1000,
@@ -40,7 +46,8 @@ describe('RefreshTokenModel', () => {
         userId: new ObjectId('22'),
         token: 'KGjwqgmiwq',
         fingerprint: null,
-        userAgent: 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/48.3',
+        userAgent:
+            'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/48.3',
         ip: '192.168.0.1',
         createdAt,
         expiresIn: 1000,
@@ -48,7 +55,8 @@ describe('RefreshTokenModel', () => {
     const createRefreshToken: CreateRefreshTokenDto = {
         userId: new ObjectId('21'),
         token: 'KIAJFklwqgaF',
-        userAgent: 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.3',
+        userAgent:
+            'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.3',
         ip: '127.0.0.1',
         expiresIn: 1000,
     };
@@ -64,7 +72,7 @@ describe('RefreshTokenModel', () => {
         confirmed: false,
         registrationDate: createdAt,
     };
-    
+
     beforeEach(async () => {
         console.debug('testTest');
         const module: TestingModule = await Test.createTestingModule({
@@ -74,7 +82,9 @@ describe('RefreshTokenModel', () => {
                     provide: getModelToken(refreshTokenName),
                     useValue: {
                         new: jest.fn().mockResolvedValue(mockRefreshToken),
-                        constructor: jest.fn().mockResolvedValue(mockRefreshToken),
+                        constructor: jest
+                            .fn()
+                            .mockResolvedValue(mockRefreshToken),
                         find: jest.fn(),
                         findOne: jest.fn(),
                         updateOne: jest.fn(),
@@ -98,7 +108,7 @@ describe('RefreshTokenModel', () => {
                 },
             ],
         }).compile();
-        
+
         refreshTokenModel = module.get(getModelToken(refreshTokenName));
         refreshTokenRepository = module.get(RefreshTokenModel);
     });
@@ -135,4 +145,4 @@ describe('RefreshTokenModel', () => {
         const result = await refreshTokenRepository.readByUserId(userId);
         expect(result).toEqual(userTokensArr);
     });
-})
+});

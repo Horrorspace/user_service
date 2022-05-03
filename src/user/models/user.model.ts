@@ -4,14 +4,17 @@ import { InjectModel } from '@nestjs/mongoose';
 import { UserDocument, User, userName } from '../schemas/user.schema';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { AggregateRoot } from '@nestjs/cqrs';
 
 @Injectable()
-export class UserModel {
+export class UserModel extends AggregateRoot {
     constructor(
         @InjectModel(userName) private readonly userModel: Model<UserDocument>,
-    ) {}
+    ) {
+        super();
+    }
 
-    async create(userDto: CreateUserDto): Promise<User> {
+    async createByEmail(userDto: CreateUserDto): Promise<User> {
         return await this.userModel.create(userDto);
     }
 

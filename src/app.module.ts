@@ -4,7 +4,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 
-const mongoUri: string = process.env.MONGODB_URI!;
+const mongoUri: string =
+    process.env.MONGODB_URI || 'mongodb://user:BGNdWquZ@localhost:2717';
 
 @Module({
     imports: [

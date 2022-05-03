@@ -17,7 +17,7 @@ export class RefreshToken {
     @Prop({ required: true, unique: true })
     token: string;
 
-    @Prop({type: String, default: null})
+    @Prop({ type: String, default: null })
     fingerprint: string | null;
 
     @Prop({ required: true })
