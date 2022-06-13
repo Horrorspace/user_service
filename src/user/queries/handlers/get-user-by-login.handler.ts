@@ -8,7 +8,7 @@ import { codes } from 'src/user/enums/codes.enum';
 import { statuses } from 'src/user/enums/statuses.enum';
 
 @QueryHandler(GetUserByLoginQuery)
-export class GetUserByEmailHandler
+export class GetUserByLoginHandler
     implements IQueryHandler<GetUserByLoginQuery>
 {
     constructor(@Inject(UserModel) private readonly userModel: UserModel) {}
