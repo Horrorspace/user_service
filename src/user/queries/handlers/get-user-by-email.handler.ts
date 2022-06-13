@@ -17,10 +17,11 @@ export class GetUserByEmailHandler
         try {
             const { email } = query;
             const user = await this.userModel.readByEmail(email);
-            if (user) return {
-                status: statuses.success,
-                message: user
-            };
+            if (user)
+                return {
+                    status: statuses.success,
+                    message: user,
+                };
             else throw new RpcException(codes.notFound);
         } catch (e) {
             throw new RpcException(codes.serverErr);

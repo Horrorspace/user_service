@@ -1,4 +1,4 @@
-import { statuses } from "../enums/statuses.enum";
+import { statuses } from '../enums/statuses.enum';
 
 type status = `${statuses}`;
 
