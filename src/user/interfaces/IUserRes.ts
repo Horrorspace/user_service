@@ -1,10 +1,6 @@
 import { User } from '../schemas/user.schema';
+import { IStatus } from './IStatus';
 
-export enum codes {
-    notFound = 404,
-    serverErr = 500,
+export interface IUserRes extends IStatus {
+    message: User;
 }
-
-export type codeRes = `${codes}`;
-
-export type IUserRes = User | codeRes;

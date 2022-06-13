@@ -1,5 +1,12 @@
-import { Controller, Inject } from '@nestjs/common';
+import {
+    Controller,
+    Inject,
+    UseFilters,
+    UseInterceptors,
+} from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { UserExceptionFilter } from './filters/user-exception.filter';
+import { JsonInterceptor } from './interceptors/json.interceptor';
 import { IUserRes } from './interfaces/IUserRes';
 import { UserService } from './user.service';
 
@@ -10,7 +17,16 @@ export class UserController {
     ) {}
 
     @MessagePattern('getUserByEmail')
+    @UseFilters(new UserExceptionFilter())
+    @UseInterceptors(JsonInterceptor)
     async getUserByEmail(@Payload() email: string): Promise<IUserRes> {
         return this.userService.getUserByEmail(email);
+    }
+
+    @MessagePattern('getUserByLogin')
+    @UseFilters(new UserExceptionFilter())
+    @UseInterceptors(JsonInterceptor)
+    async getUserByLogin(@Payload() login: string): Promise<IUserRes> {
+        return this.userService.getUserByEmail(login);
     }
 }
