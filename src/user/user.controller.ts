@@ -17,12 +17,13 @@ export class UserController {
 
     @MessagePattern('getUserByEmail')
     async getUserByEmail(@Payload() email: string): Promise<IUserRes> {
+        console.debug('email', email);
         return this.userService.getUserByEmail(email);
     }
 
     @MessagePattern('getUserByLogin')
     async getUserByLogin(@Payload() login: string): Promise<IUserRes> {
-        return this.userService.getUserByEmail(login);
+        return this.userService.getUserByLogin(login);
     }
 
     @MessagePattern('createUserByEmail')

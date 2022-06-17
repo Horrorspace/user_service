@@ -2,7 +2,7 @@ import { Catch, RpcExceptionFilter } from '@nestjs/common';
 import { Observable, of } from 'rxjs';
 import { RpcException } from '@nestjs/microservices';
 import { IErrorRes, codeRes } from '../interfaces/IErrorRes';
-import { statuses } from 'src/user/enums/statuses.enum';
+import { statuses } from '../enums/statuses.enum';
 import { IError } from '../interfaces/IError';
 import { LoggerService } from '../../logger/logger.service';
 

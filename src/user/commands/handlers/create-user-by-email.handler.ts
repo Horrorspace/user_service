@@ -4,8 +4,8 @@ import { RpcException } from '@nestjs/microservices';
 import { CreateUserByEmailCommand } from '../impl/create-user-by-email.command';
 import { UserModel } from '../../../user/models/user.model';
 import { IUserRes } from '../../../user/interfaces/IUserRes';
-import { codes } from 'src/user/enums/codes.enum';
-import { statuses } from 'src/user/enums/statuses.enum';
+import { codes } from '../../enums/codes.enum';
+import { statuses } from '../../enums/statuses.enum';
 import { IError } from '../../interfaces/IError';
 
 @CommandHandler(CreateUserByEmailCommand)

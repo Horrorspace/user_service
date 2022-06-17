@@ -1,7 +1,7 @@
 import { PipeTransform, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { CreateUserDto } from '../dto/create-user.dto';
-import { codes } from 'src/user/enums/codes.enum';
+import { codes } from '../enums/codes.enum';
 import { IError } from '../interfaces/IError';
 
 @Injectable()

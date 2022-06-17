@@ -8,7 +8,7 @@ rabbitmq:
 
 mongodb:
   host: 'localhost'
-  port: 2717
+  port: 27017
   user: 'user'
   password: 'BGNdWquZ'
 

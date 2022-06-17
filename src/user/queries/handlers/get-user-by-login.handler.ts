@@ -4,8 +4,9 @@ import { RpcException } from '@nestjs/microservices';
 import { GetUserByLoginQuery } from '../impl/get-user-by-login.query';
 import { UserModel } from '../../../user/models/user.model';
 import { IUserRes } from '../../../user/interfaces/IUserRes';
-import { codes } from 'src/user/enums/codes.enum';
-import { statuses } from 'src/user/enums/statuses.enum';
+import { codes } from '../../enums/codes.enum';
+import { statuses } from '../../enums/statuses.enum';
+import { IError } from '../../interfaces/IError';
 
 @QueryHandler(GetUserByLoginQuery)
 export class GetUserByLoginHandler
@@ -22,9 +23,22 @@ export class GetUserByLoginHandler
                     status: statuses.success,
                     message: user,
                 };
-            else throw new RpcException(codes.notFound);
+            else throw 'not found';
         } catch (e) {
-            throw new RpcException(codes.serverErr);
+            if (e === 'not found') {
+                const error: IError = {
+                    code: codes.notFound,
+                    reason: `not found`,
+                };
+                throw new RpcException(error);
+            }
+            else {
+                const error: IError = {
+                    code: codes.serverErr,
+                    reason: `${e}`,
+                };
+                throw new RpcException(error);
+            }
         }
     }
 }
