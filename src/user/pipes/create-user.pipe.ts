@@ -2,6 +2,7 @@ import { PipeTransform, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { codes } from 'src/user/enums/codes.enum';
+import { IError } from '../interfaces/IError';
 
 @Injectable()
 export class CreateUserPipe implements PipeTransform {
@@ -9,24 +10,54 @@ export class CreateUserPipe implements PipeTransform {
         if (typeof value === 'string') {
             const data = JSON.parse(value) as CreateUserDto;
             if (!data.hasOwnProperty('login')) {
-                throw new RpcException(codes.badRequest);
+                const error: IError = {
+                    code: codes.badRequest,
+                    reason: 'there is not login field',
+                };
+                throw new RpcException(error);
             }
             if (!data.hasOwnProperty('email')) {
-                throw new RpcException(codes.badRequest);
+                const error: IError = {
+                    code: codes.badRequest,
+                    reason: 'there is not email field',
+                };
+                throw new RpcException(error);
             }
             if (!data.hasOwnProperty('password')) {
-                throw new RpcException(codes.badRequest);
+                const error: IError = {
+                    code: codes.badRequest,
+                    reason: 'there is not password field',
+                };
+                throw new RpcException(error);
             }
             if (typeof data.login !== 'string') {
-                throw new RpcException(codes.badRequest);
+                const error: IError = {
+                    code: codes.badRequest,
+                    reason: 'there is not valide login field',
+                };
+                throw new RpcException(error);
             }
             if (typeof data.email !== 'string') {
-                throw new RpcException(codes.badRequest);
+                const error: IError = {
+                    code: codes.badRequest,
+                    reason: 'there is not valide email field',
+                };
+                throw new RpcException(error);
             }
             if (typeof data.password !== 'string') {
-                throw new RpcException(codes.badRequest);
+                const error: IError = {
+                    code: codes.badRequest,
+                    reason: 'there is not valide password field',
+                };
+                throw new RpcException(error);
             }
             return data;
-        } else throw new RpcException(codes.badRequest);
+        } else {
+            const error: IError = {
+                code: codes.badRequest,
+                reason: 'there is not valid value',
+            };
+            throw new RpcException(error);
+        }
     }
 }
