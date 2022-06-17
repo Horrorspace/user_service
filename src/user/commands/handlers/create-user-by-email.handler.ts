@@ -6,6 +6,7 @@ import { UserModel } from '../../../user/models/user.model';
 import { IUserRes } from '../../../user/interfaces/IUserRes';
 import { codes } from 'src/user/enums/codes.enum';
 import { statuses } from 'src/user/enums/statuses.enum';
+import { IError } from '../../interfaces/IError';
 
 @CommandHandler(CreateUserByEmailCommand)
 export class CreateUserByEmailHandler
@@ -22,7 +23,11 @@ export class CreateUserByEmailHandler
                 message: user,
             };
         } catch (e) {
-            throw new RpcException(codes.serverErr);
+            const error: IError = {
+                code: codes.serverErr,
+                reason: `${e}`,
+            };
+            throw new RpcException(error);
         }
     }
 }
