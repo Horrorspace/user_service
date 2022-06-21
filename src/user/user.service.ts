@@ -28,9 +28,10 @@ export class UserService {
     }
 
     async createUserByEmail(userToCreate: CreateUserDto): Promise<IUserRes> {
-        return await this.commandBus.execute<CreateUserByEmailCommand, IUserRes>(
-            new CreateUserByEmailCommand(userToCreate),
-        );
+        return await this.commandBus.execute<
+            CreateUserByEmailCommand,
+            IUserRes
+        >(new CreateUserByEmailCommand(userToCreate));
     }
 
     async deleteUserByLogin(login: string): Promise<IRes> {
