@@ -1,13 +1,10 @@
-import {
-    Controller,
-    Inject,
-} from '@nestjs/common';
+import { Controller, Inject } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { IUserRes } from './interfaces/IUserRes';
 import { IRes } from './interfaces/IRes';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { CreateUserPipe } from './pipes/create-user.pipe'
+import { CreateUserPipe } from './pipes/create-user.pipe';
 
 @Controller()
 export class UserController {
@@ -27,7 +24,9 @@ export class UserController {
     }
 
     @MessagePattern('createUserByEmail')
-    async createUserByEmail(@Payload(new CreateUserPipe()) userToCreate: CreateUserDto): Promise<IUserRes> {
+    async createUserByEmail(
+        @Payload(new CreateUserPipe()) userToCreate: CreateUserDto,
+    ): Promise<IUserRes> {
         return await this.userService.createUserByEmail(userToCreate);
     }
 
