@@ -1,10 +1,14 @@
 import { Model, ObjectId } from 'mongoose';
 import { Injectable } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
+import bcrypt from 'bcrypt';
 import { UserDocument, User, userName } from '../schemas/user.schema';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { AggregateRoot } from '@nestjs/cqrs';
+import { codes } from '../enums/codes.enum';
+import { IError } from '../interfaces/IError';
 
 @Injectable()
 export class UserModel extends AggregateRoot {
@@ -14,8 +18,29 @@ export class UserModel extends AggregateRoot {
         super();
     }
 
+    async checkEmail(email: string): Promise<boolean> {
+        const doc = await this.userModel
+            .findOne({ email })
+            .projection({ email: 1 })
+            .exec();
+        return !!doc;
+    }
+
     async createByEmail(userDto: CreateUserDto): Promise<User> {
-        return await this.userModel.create(userDto);
+        const isExist = await this.checkEmail(userDto.email);
+        if (isExist) {
+            const error: IError = {
+                code: codes.conflict,
+                reason: `user already exist`,
+            };
+            throw new RpcException(error);
+        }
+        const hashedPassword: string = await bcrypt.hash(userDto.password, 15);
+        const newUser: CreateUserDto = {
+            ...userDto,
+            password: hashedPassword,
+        };
+        return await this.userModel.create(newUser);
     }
 
     async readAll(): Promise<User[]> {
