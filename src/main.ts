@@ -50,6 +50,6 @@ async function bootstrap() {
     app.useLogger(logger);
     app.useGlobalFilters(new UserExceptionFilter(logger));
     app.useGlobalInterceptors(new JsonInterceptor());
-    app.listen();
+    await app.listen();
 }
 bootstrap();

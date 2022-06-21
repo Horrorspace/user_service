@@ -18,7 +18,7 @@ export class DeleteUserByLoginHandler
         try {
             const { login } = query;
             const user = await this.userModel.deleteByLogin(login);
-            if (!user) throw new Error('removal failed')
+            if (!user) throw new Error('removal failed');
             return {
                 status: statuses.success,
                 message: '',

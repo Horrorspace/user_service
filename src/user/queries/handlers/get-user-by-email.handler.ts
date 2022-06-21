@@ -31,8 +31,7 @@ export class GetUserByEmailHandler
                     reason: `not found`,
                 };
                 throw new RpcException(error);
-            }
-            else {
+            } else {
                 const error: IError = {
                     code: codes.serverErr,
                     reason: `${e}`,

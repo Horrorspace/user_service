@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongoShema, ObjectId as objectId } from 'mongoose';
+import { Document, ObjectId as objectId } from 'mongoose';
 // import { Settings, settingsName } from './settings.schema';
 import getCurrentDate from '../../utils/getCurrentDate';
 

@@ -37,7 +37,7 @@ import configuration from './config/configuration';
         }),
         UserModule,
         RefreshTokenModule,
-        LoggerModule
+        LoggerModule,
     ],
     controllers: [],
     providers: [],
