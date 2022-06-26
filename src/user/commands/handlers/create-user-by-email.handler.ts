@@ -23,11 +23,19 @@ export class CreateUserByEmailHandler
                 message: user,
             };
         } catch (e) {
-            const error: IError = {
-                code: codes.serverErr,
-                reason: `${e}`,
-            };
-            throw new RpcException(error);
+            if (e === 'user already exist') {
+                const error: IError = {
+                    code: codes.conflict,
+                    reason: e,
+                };
+                throw new RpcException(error);
+            } else {
+                const error: IError = {
+                    code: codes.serverErr,
+                    reason: `${e}`,
+                };
+                throw new RpcException(error);
+            }
         }
     }
 }
